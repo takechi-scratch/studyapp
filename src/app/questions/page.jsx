@@ -16,6 +16,7 @@ const Questions = ({questions, isRandom, includesFeedback}) => {
         setShowAnswer(!showAnswer);
     };
 
+
     const handleNextQuestion = () => {
         if (isRandom) {
             setCurrentQuestionIndex(Math.floor(Math.random() * questions.length));
@@ -23,20 +24,41 @@ const Questions = ({questions, isRandom, includesFeedback}) => {
             setCurrentQuestionIndex((prevIndex) => (prevIndex + 1) % questions.length);
         }
             setShowAnswer(false);
-    };
+        };
 
-    const handlePrevQuestion = () => {
-        if (isRandom) {
-            setCurrentQuestionIndex(Math.floor(Math.random() * questions.length));
-        } else {
-            setCurrentQuestionIndex((prevIndex) => (prevIndex - 1 + questions.length) % questions.length);
-        }
-        setShowAnswer(false);
-    };
+        const handlePrevQuestion = () => {
+            if (isRandom) {
+                setCurrentQuestionIndex(Math.floor(Math.random() * questions.length));
+            } else {
+                setCurrentQuestionIndex((prevIndex) => (prevIndex - 1 + questions.length) % questions.length);
+            }
+            setShowAnswer(false);
+        };
 
-    const currentQuestion = questions[currentQuestionIndex];
+        useEffect(() => {
+            const globalKeyDownHandler = (e) => {
+                const key = e.code;
 
-    const inputRef = useRef(null);
+                if (key === 'ArrowLeft') {
+                    handlePrevQuestion();
+                }
+
+                if (key === 'ArrowRight') {
+                    handleNextQuestion();
+                }
+            };
+
+            // documentにイベントリスナーを追加
+            document.addEventListener('keydown', globalKeyDownHandler);
+
+            // クリーンアップ処理
+            return () => {
+                document.removeEventListener('keydown', globalKeyDownHandler);
+            };
+        }, [handlePrevQuestion, handleNextQuestion]);
+
+        const currentQuestion = questions[currentQuestionIndex];
+        const inputRef = useRef(null);
 
     return (
         <div className="p-4 bg-white rounded shadow-md relative z-10">
