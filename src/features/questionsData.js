@@ -1,6 +1,6 @@
 export let currentDatabaseID = "";
 
-export const changeDatabaseID =　async (id) => {
+export const changeDatabaseID = async (id) => {
     if (!isIdValid(id)) {
         throw new Error("データベースIDの形式が不正です");
     }
@@ -17,7 +17,7 @@ export const isIdValid = (id) => {
 };
 
 const fetchGAS = async (method = "GET", gasID, query) => {
-    const url = `https://script.google.com/macros/s/${gasID}/exec`
+    const url = `https://script.google.com/macros/s/${gasID}/exec`;
     const params = new URLSearchParams(query).toString();
 
     if (!["GET", "POST"].includes(method)) {
@@ -26,7 +26,7 @@ const fetchGAS = async (method = "GET", gasID, query) => {
 
     try {
         console.log(`${url}?${params}`);
-        const response = await fetch(`${url}?${params}`, {method: method});
+        const response = await fetch(`${url}?${params}`, { method: method });
         if (!response.ok || !response.headers.get("Content-Type").startsWith("application/json")) {
             throw new Error("GoogleAppsScriptにてエラーが発生しました");
         }
@@ -80,19 +80,18 @@ export const fetchBlockIndex = async (databaseID, useCache = true) => {
 
     let response;
     try {
-        response = await fetchGAS("GET", gasID, {type: "getIndex"});
+        response = await fetchGAS("GET", gasID, { type: "getIndex" });
     } catch (error) {
         console.error("Fetch error:", error);
         throw error;
     }
 
     // ローカルストレージに保存
-    storage[gasID] = {timestamp: Date.now(), blocks: response};
+    storage[gasID] = { timestamp: Date.now(), blocks: response };
     localStorage.setItem("blockIndex", JSON.stringify(storage));
 
     return response;
 };
-
 
 export const fetchQuestions = async (databaseID = "", blockID, useCache = true) => {
     if (databaseID === "") {
@@ -115,14 +114,14 @@ export const fetchQuestions = async (databaseID = "", blockID, useCache = true) 
 
     let response;
     try {
-        response = await fetchGAS("GET", gasID, {type: "getQuestions", questionsID: blockID});
+        response = await fetchGAS("GET", gasID, { type: "getQuestions", questionsID: blockID });
     } catch (error) {
         console.error("Fetch error:", error);
         throw error;
     }
 
     // ローカルストレージに保存
-    storage[`${gasID}.${blockID}`] = {timestamp: Date.now(), questions: response};
+    storage[`${gasID}.${blockID}`] = { timestamp: Date.now(), questions: response };
     localStorage.setItem("questions", JSON.stringify(storage));
 
     return response;

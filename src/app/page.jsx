@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 // app routerを使うときはこっち！！
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 import Header from "../components/header";
 import { currentDatabaseID, changeDatabaseID } from "@/features/questionsData";
@@ -33,20 +33,22 @@ export default function Home() {
             router.push("/blocks");
         } catch (error) {
             toast(error.message, {
-                style: { background: "#fecaca", color: "#000" },
-            })
+                style: { background: "#fecaca", color: "#000" }
+            });
         }
     };
 
     return (
-        <div className="flex flex-col min-h-screen lg:px-8">
+        <>
             <Header />
-            <main className="flex flex-col justify-between p-24">
+            <main className="flex flex-col justify-between p-8 lg:p-24 gap-8">
                 <h1 className="text-4xl font-bold">テスト対策アプリ</h1>
-                <p className="text-xl">現在製作中です！ぜひ改善にご協力ください！</p>
+                <p className="text-xl">現在製作中です。一部の機能はまだ使えません。</p>
                 <div className="flex flex-col gap-y-4 rounded p-4 bg-gray-50 max-w-sm mx-auto">
                     <div className="flex flex-col gap-y-2">
-                        <label htmlFor="problem-id" className="text-lg">データベースID</label>
+                        <label htmlFor="problem-id" className="text-lg">
+                            データベースID
+                        </label>
                         <input
                             type="text"
                             id="problem-id"
@@ -61,7 +63,20 @@ export default function Home() {
                     </button>
                     <Link href="/make">問題を作成する</Link>
                 </div>
+                <p className="text-sm text-gray-500 mt-4">
+                    Github:
+                    <a href="https://github.com/takechi-scratch/studyapp" className="text-blue-500 hover:underline">
+                        takechi-scratch/studyapp
+                    </a>
+                    <br />
+                    <a
+                        href="https://github.com/users/takechi-scratch/projects/1"
+                        className="text-blue-500 hover:underline"
+                    >
+                        「テスト対策アプリ（仮）」開発計画
+                    </a>
+                </p>
             </main>
-        </div>
+        </>
     );
 }
