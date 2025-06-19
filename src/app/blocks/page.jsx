@@ -20,9 +20,7 @@ function Blocks() {
 
     if (currentDatabaseID === "") {
         router.push("/"); // やっぱり、バグになるみたい
-        return (
-            <p className="text-xl">データベースIDを入力してください</p>
-        );
+        return <p className="text-xl">データベースIDを入力してください</p>;
     }
 
     useEffect(() => {
@@ -49,18 +47,22 @@ function Blocks() {
     return (
         <>
             <BlocksGrid blocks={blocks.filter((block) => !block.hidden)} />
-            {blocks.filter((block) => block.hidden).length > 0 && (<div className="relative">
-                <div className="p-4 border border-gray-300 rounded-md text-left hover:bg-gray-50 w-full" onClick={toggleMenu} role="button" tabIndex="0">
-                    <p>非表示のブロック</p>
-                    {isOpen && (
-                        <BlocksGrid blocks={blocks.filter((block) => block.hidden)} />
-                    )}
+            {blocks.filter((block) => block.hidden).length > 0 && (
+                <div className="relative">
+                    <div
+                        className="p-4 border border-gray-300 rounded-md text-left hover:bg-gray-50 w-full"
+                        onClick={toggleMenu}
+                        role="button"
+                        tabIndex="0"
+                    >
+                        <p>非表示のブロック</p>
+                        {isOpen && <BlocksGrid blocks={blocks.filter((block) => block.hidden)} />}
+                    </div>
                 </div>
-            </div>)}
+            )}
         </>
     );
 }
-
 
 export default function Home() {
     const router = useRouter();
@@ -69,7 +71,7 @@ export default function Home() {
         toast("読み込み中...");
         fetchBlockIndex(currentDatabaseID, false).then(() => {
             toast("ブロックデータを更新しました！", {
-                style: { background: "#86efac", color: "#000" },
+                style: { background: "#86efac", color: "#000" }
             });
         });
     };
@@ -82,8 +84,18 @@ export default function Home() {
                 <Suspense fallback={<div>読み込み中...</div>}>
                     <Blocks />
                 </Suspense>
-                <button className="px-8 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 self-start" onClick={() => router.push("/")}>ホームへ</button>
-                <button className="px-8 py-2 bg-red-500 text-white rounded hover:bg-red-700 self-start" onClick={() => refresh()}>キャッシュなしで再読み込み</button>
+                <button
+                    className="px-8 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 self-start"
+                    onClick={() => router.push("/")}
+                >
+                    ホームへ
+                </button>
+                <button
+                    className="px-8 py-2 bg-red-500 text-white rounded hover:bg-red-700 self-start"
+                    onClick={() => refresh()}
+                >
+                    キャッシュなしで再読み込み
+                </button>
             </main>
         </div>
     );
