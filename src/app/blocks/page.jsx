@@ -77,7 +77,7 @@ export default function Home() {
     return (
         <div className="flex flex-col min-h-screen lg:px-8">
             <Header />
-            <main className="flex flex-col justify-between p-24 gap-8">
+            <main className="flex flex-col justify-between p-8 lg:p-24 gap-8">
                 <h1 className="text-4xl font-bold">問題一覧</h1>
                 <Suspense fallback={<div>読み込み中...</div>}>
                     <Blocks />
