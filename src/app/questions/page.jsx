@@ -3,6 +3,8 @@
 import { useState, useEffect, Suspense, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import Header from "../../components/header";
 import { currentDatabaseID, fetchQuestions } from "@/features/questionsData";
@@ -105,14 +107,26 @@ const Questions = ({ questions, isRandom, includesFeedback }) => {
             )}
 
             <div className="flex flex-col min-h-44 lg:min-h-8">
-                <p className="text-xl mb-4">{currentQuestion.question}</p>
+                <div className="text-xl mb-4">
+                    <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        // allowedElements={["p", "strong", "em", "ul", "ol", "li"]}
+                    >
+                        {currentQuestion.question}
+                    </ReactMarkdown>
+                </div>
+
                 <div className="flex-grow"></div>
                 <button
                     className="flex-end p-4 border border-gray-300 rounded-md text-left hover:bg-gray-50 w-full"
                     onClick={handleToggleAnswer}
                 >
                     {!showAnswer && <p className="p-1">答えを表示</p>}
-                    {showAnswer && <p className="text-green-600 p-1">{currentQuestion.answer}</p>}
+                    {showAnswer && (
+                        <div className="text-green-600 p-1">
+                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{currentQuestion.answer}</ReactMarkdown>
+                        </div>
+                    )}
                     {showAnswer && includesFeedback && (
                         <p className="text-gray-500 p-1">{currentQuestion.feedback || "（解説なし）"}</p>
                     )}
