@@ -23,9 +23,7 @@ export function DisplayDatabase() {
             if (paramDatabaseID) {
                 setDatabaseID(paramDatabaseID);
                 if (savedDatabaseID && savedDatabaseID !== paramDatabaseID) {
-                    toast("URLでデータベースIDを変更しました。", {
-                        style: { background: "#cce5ff", color: "#004085" }
-                    });
+                    toast.info("URLでデータベースIDを変更しました。");
                 }
                 return;
             } else if (savedDatabaseID) {
@@ -42,9 +40,7 @@ export function DisplayDatabase() {
             }
             router.push("/blocks");
         } catch (error) {
-            toast(error.message, {
-                style: { background: "#fecaca", color: "#000" }
-            });
+            toast.error(error.message);
         }
     };
 

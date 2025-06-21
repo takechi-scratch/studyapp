@@ -1,11 +1,11 @@
 import "./globals.css";
-import Script from 'next/script';
+import Script from "next/script";
 
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {
     title: "テスト対策アプリ",
-    description: "現在作成中です",
+    description: "現在作成中です"
 };
 
 export default function RootLayout({ children }) {
@@ -19,12 +19,8 @@ export default function RootLayout({ children }) {
                 <title>{metadata.title}</title>
                 <meta name="description" content={metadata.description} />
 
-                <Script
-                    src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-                    strategy='afterInteractive'
-                    async
-                />
-                <Script id='google-analytics' strategy='afterInteractive'>
+                <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} strategy="afterInteractive" async />
+                <Script id="google-analytics" strategy="afterInteractive">
                     {`
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
@@ -32,11 +28,10 @@ export default function RootLayout({ children }) {
                     gtag('config', '${gaId}');
                 `}
                 </Script>
-
             </head>
             <body>
                 {children}
-                <Toaster/ >
+                <Toaster richColors />
             </body>
         </html>
     );

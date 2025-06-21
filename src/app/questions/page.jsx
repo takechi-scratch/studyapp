@@ -144,12 +144,13 @@ const Settings = ({ isRandom, setIsRandom, includesFeedback, setIncludesFeedback
     };
 
     const refresh = () => {
-        toast("読み込み中...");
-        fetchQuestions(currentDatabaseID, blockID, false).then((data) => {
-            setQuestions(data);
-            toast("問題データを更新しました！", {
-                style: { background: "#86efac", color: "#000" }
-            });
+        const promise = fetchQuestions(currentDatabaseID, blockID, false);
+
+        toast.promise(promise, {
+            loading: "読み込み中...",
+            success: () => {
+                return "問題データを更新しました！";
+            }
         });
     };
 
